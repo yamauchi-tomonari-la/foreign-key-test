@@ -33,6 +33,15 @@ public class ForeignKeyController {
 		return "item_list";
 	}
 	
+	@GetMapping("/items/category/{name}")
+	public String itemsByCategoryName(
+			@PathVariable("name") String name,
+			Model model) {
+		List<Item> items = itemRepository.findByCategoryName(name);
+		model.addAttribute("items", items);
+		return "item_list";
+	}
+	
 	@GetMapping("/categories")
 	public String categories(Model model) {
 		List<Category> categories = categoryRepository.findAll();

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS category (
 CREATE TABLE IF NOT EXISTS item (
 	id SERIAL,
 	category_id INTEGER,
-	manufacuturer_id INTEGER,
+	manufacturer_id INTEGER,
 	name VARCHAR(16),
 	PRIMARY KEY (id)
 );
