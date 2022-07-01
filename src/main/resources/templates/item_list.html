@@ -8,13 +8,17 @@
 <h1>Item List</h1>
 <table border="1">
 	<tr>
+		<th>画像</th>
 		<th>品名</th>
 		<th>カテゴリ</th>
 		<th>工場</th>
+		<th> </th>
 	<tr th:each="item: ${items}">
+		<td><img th:src="|data:image/png;base64,${item.imageBase64}|"></td>
 		<td th:text="${item.name}"></td>
 		<td th:text="${item.category.name}"></td>
 		<td th:text="${item.factory.name}"></td>
+		<td><a th:href="|/item/imageUpload/${item.name}|">画像追加</a></td>
 	</tr>
 </table>
 </body>

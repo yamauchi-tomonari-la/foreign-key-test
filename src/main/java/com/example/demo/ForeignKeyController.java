@@ -1,12 +1,17 @@
 package com.example.demo;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class ForeignKeyController {
@@ -40,6 +45,33 @@ public class ForeignKeyController {
 		List<Item> items = itemRepository.findByCategoryName(name);
 		model.addAttribute("items", items);
 		return "item_list";
+	}
+	
+	@GetMapping("/item/imageUpload/{name}")
+	public String itemImageUpload(
+			@PathVariable("name") String name,
+			Model model) 
+	{
+		Optional<Item> o = itemRepository.findById(name);
+		if (o == null || o.isEmpty()) {
+			return "redirect:/items";
+		}
+		model.addAttribute("item", o.get());
+		return "item_image_upload";
+	}
+	
+	@PostMapping("/item/imageUpload/{name}")
+	public String itemImageUpload(
+			@PathVariable("name") String name,
+			@RequestParam("image") MultipartFile image) throws IOException {
+		Optional<Item> o = itemRepository.findById(name);
+		if (o == null || o.isEmpty()) {
+			return "redirect:/items";
+		}
+		Item item = o.get();
+		item.setImage(image.getBytes());
+		itemRepository.saveAndFlush(item);
+		return "redirect:/items";
 	}
 	
 	@GetMapping("/categories")

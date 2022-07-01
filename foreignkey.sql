@@ -5,11 +5,11 @@ CREATE TABLE IF NOT EXISTS category (
 );
 
 CREATE TABLE IF NOT EXISTS item (
-	id SERIAL,
+	name VARCHAR(16) UNIQUE NOT NULL,
 	category_id INTEGER,
 	manufacturer_id INTEGER,
-	name VARCHAR(16),
-	PRIMARY KEY (id)
+	image BYTEA,
+	PRIMARY KEY (name)
 );
 
 CREATE TABLE IF NOT EXISTS factory (
