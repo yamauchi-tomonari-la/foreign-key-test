@@ -18,6 +18,16 @@ CREATE TABLE IF NOT EXISTS factory (
 	PRIMARY KEY (code)
 );
 
+CREATE TABLE IF NOT EXISTS sales_office (
+	name VARCHAR(16) UNIQUE PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS sales_rep (
+	number VARCHAR(16) UNIQUE PRIMARY KEY,
+	name VARCHAR(16),
+	office VARCHAR(16)
+);
+
 INSERT INTO category (name) VALUES ('映像');
 INSERT INTO category (name) VALUES ('音響');
 INSERT INTO category (name) VALUES ('調理');
@@ -43,3 +53,8 @@ INSERT INTO item (category_id, manufacturer_id, name) VALUES (
 INSERT INTO item (category_id, manufacturer_id, name) VALUES (
 	3, 1, '洗濯機'
 );
+
+INSERT INTO sales_office (name) VALUES ('札幌'), ('仙台'), ('東京'),
+('名古屋'), ('大阪'), ('広島'), ('福岡');
+
+INSERT INTO sales_rep (name, office) ('山田太郎', '東京'), ('鈴木一郎', '札幌'), ('佐藤花子', '大阪')

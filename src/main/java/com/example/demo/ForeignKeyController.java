@@ -88,4 +88,15 @@ public class ForeignKeyController {
 		return "factory_list";
 	}
 
+	@GetMapping("/delete/{name}")
+	public String deleteItem(
+			@PathVariable("name") String name,
+			Model model) {
+		try {
+		itemRepository.deleteById(name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/items";
+	}
 }
