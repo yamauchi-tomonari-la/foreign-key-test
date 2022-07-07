@@ -22,6 +22,11 @@ public class ForeignKeyController {
 	@Autowired
 	FactoryRepository factoryRepository;
 	
+	@GetMapping("/login")
+	public String login() {
+		return "panda";
+	}
+	
 	@GetMapping("/items")
 	public String items(Model model) {
 		List<Item> items = itemRepository.findAll();
