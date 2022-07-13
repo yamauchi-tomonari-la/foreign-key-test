@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Factory List</title>
+</head>
+<body>
+<h1>Factory List</h1>
+<hr>
+<div th:each="factory: ${factories}">
+<p th:text="${factory.name}">
+<table border="1">
+	<tr th:each="item: ${factory.items}">
+		<td th:text="${item.name}"></td>
+		<td th:text="${item.category.name}"></td>
+	</tr> 
+</table>
+</div>
+</body>
+</html>

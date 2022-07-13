@@ -7,18 +7,11 @@
 <body>
 <h1>Item List</h1>
 <table border="1">
-	<tr>
-		<th>品名</th>
-		<th>カテゴリ</th>
-		<th>工場</th>
 	<tr th:each="item: ${items}">
 		<td th:text="${item.name}"></td>
 		<td th:text="${item.category.name}"></td>
 		<td th:text="${item.factory.name}"></td>
 	</tr>
 </table>
-<hr>
-<h1>数値のテスト</h1>
-<p th:text="${#numbers.formatDecimal(num,3,2)}"></p>
 </body>
 </html>

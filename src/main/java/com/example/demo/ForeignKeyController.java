@@ -21,6 +21,7 @@ public class ForeignKeyController {
 	public String items(Model model) {
 		List<Item> items = itemRepository.findAll();
 		model.addAttribute("items", items);
+		model.addAttribute("num", 3.141592);
 		return "item_list";
 	}
 	
