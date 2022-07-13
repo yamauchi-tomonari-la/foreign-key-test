@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/menu.css">
+<title>Top</title>
+</head>
+<body style="background-color: lightcyan; ">
+
+<div>
+
+<div style = "display: flex; justify-content: space-between;">
+
+<figure>
+<!-- <a class = "fontcolor_1" href="/top" style="padding-left:10px;">〇△□ゲームストア</a> -->
+<a href="/top"><img src="/images/top.jpg" alt="Top"></a>
+</figure>
+
+<div>
+<a href="/cart"><img src="/images/cart.jpeg" alt="Cart"></a>
+<a href="/mypage"><img src="/images/mypage.jpeg" alt="Mypage"></a>
+</div>
+
+</div>
+
+<nav>
+<ul>
+
+<li><details><summary><a href="/items">全商品</a></summary></details></li>
+
+<li>
+<details>
+  <summary>機種別</summary>
+  <!-- 
+  <p th:each="c:${session.categories}"><a th:href="|/items/${c.code}|" th:text="${c.name}"></a></p>
+   -->
+   <p><a href="/items/1">No.1</a></p>
+   <p><a href="/items/2">No.2</a></p>
+   <p><a href="/items/3">No.3</a></p>
+</details>
+<!-- 
+<a class = "fontcolor" th:each="c:${session.categories}" th:href="|/items/${c.code}|">
+	<span th:text="${c.name}" style="padding-left:10px;"></span>
+</a>
+ -->
+</li>
+
+<li>
+<details>
+  <summary>カテゴリー別</summary>
+  <!-- 
+  <p th:each="g:${session.genres}"><a th:href="|/genre/${g.code}|" th:text="${g.name}"></a></p>
+   -->
+   <p><a href="/items/1">No.1</a></p>
+   <p><a href="/items/2">No.2</a></p>
+   <p><a href="/items/3">No.3</a></p>
+</details>
+<!-- 
+<a class = "fontcolor" th:each="g:${session.genres}" th:href="|/genre/${g.code}|">
+	<span th:text="${g.name}" style="padding-left:10px;"></span>
+</a>
+ -->
+</li>
+<script>
+let details = document.getElementsByTagName("details");
+for (i = 0; i < details.length; ++i) {
+	details[i].addEventListener("toggle", function(event) {
+		if (event.target.open) {
+			let ds = document.getElementsByTagName("details");
+			for (j = 0; j < ds.length; ++j) {
+				if (ds[j] != event.target) {
+					ds[j].removeAttribute("open");
+				}
+			}
+		}
+	});
+}
+</script>
+
+
+<li>　</li>
+
+<li class="search">
+<form action="/items" method="get" class="search-form">
+<span style="color:white;">価格帯</span>
+<select name="price">
+<option value="" selected="selected">指定しない</option>
+<option value="1">～&yen;2,000</option>
+<option value="2">&yen;2,000～&yen;4,000</option>
+<option value="3">&yen;4,000～&yen;6,000</option>
+<option value="4">&yen;6,000～&yen;8,000</option>
+<option value="5">&yen;8,000～</option>
+</select>
+<!-- 
+	価格　：<input type="text" name="min_price" size = "14" th:value="${min_price}">円以上<br>
+	　　　　<input type="text" name="max_price" size = "14" th:value="${max_price}">円以下<br>
+ -->
+<!-- 
+<input type="text" name="keyword" class="search-input" placeholder = "キーワードを入力" th:value="${keyword}">
+ -->
+<input type="text" name="keyword" class="search-input" placeholder = "キーワードを入力" value="keyword">
+<input type="submit" value="&#128269;" class="search-button">
+</form>
+</li>
+
+</ul>
+</nav>
+
+<br>
+
+</div>
+
+</body>
+</html>

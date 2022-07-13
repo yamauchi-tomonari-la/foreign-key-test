@@ -1,6 +1,14 @@
 package com.example.demo;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,14 +76,83 @@ public class ForeignKeyController {
 	@PostMapping("/item/imageUpload/{name}")
 	public String itemImageUpload(
 			@PathVariable("name") String name,
+			@RequestParam(name="image", required=false) MultipartFile image) throws IOException {
+		Optional<Item> o = itemRepository.findById(name);
+		if (o == null || o.isEmpty()) {
+			return "redirect:/items";
+		}
+		System.err.println("image: " + image);
+		if (image != null) {
+			System.err.println("empty: " + image.isEmpty());
+		}
+		Item item = o.get();
+		item.setImage(image.getBytes());
+		itemRepository.saveAndFlush(item);
+		return "redirect:/items";
+	}
+	
+	@GetMapping("/item/fileUpload/{name}")
+	public String itemFileUpload(
+			@PathVariable("name") String name,
+			Model model) 
+	{
+		Optional<Item> o = itemRepository.findById(name);
+		if (o == null || o.isEmpty()) {
+			return "redirect:/items";
+		}
+		model.addAttribute("item", o.get());
+		return "item_file_upload";
+	}
+	
+    private String getExtension(String filename) {
+        int dot = filename.lastIndexOf(".");
+        if (dot > 0) {
+          return filename.substring(dot).toLowerCase();
+        }
+        return "";
+      }
+
+    private String getUploadFileName(String fileName) {
+
+        return fileName + "_" +
+                DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
+                    .format(LocalDateTime.now())
+                + getExtension(fileName);
+    }
+
+    private void createDirectory() {
+        Path path = Paths.get("C:/upload/files");
+        if (!Files.exists(path)) {
+          try {
+            Files.createDirectory(path);
+          } catch (Exception e) {
+            //エラー処理は省略
+          }
+        }
+    }
+
+   private void savefile(MultipartFile file) {
+        String filename = getUploadFileName(file.getOriginalFilename());
+        Path uploadfile = Paths.get("C:/upload/files/" + filename);
+        try (OutputStream os = Files.newOutputStream(uploadfile, StandardOpenOption.CREATE)) {
+          byte[] bytes = file.getBytes();
+          os.write(bytes);
+        } catch (IOException e) {
+          //エラー処理は省略
+        }
+      }
+
+	@PostMapping("/item/fileUpload/{name}")
+	public String itemFileUpload(
+			@PathVariable("name") String name,
 			@RequestParam("image") MultipartFile image) throws IOException {
 		Optional<Item> o = itemRepository.findById(name);
 		if (o == null || o.isEmpty()) {
 			return "redirect:/items";
 		}
 		Item item = o.get();
-		item.setImage(image.getBytes());
-		itemRepository.saveAndFlush(item);
+        savefile(image);
+
 		return "redirect:/items";
 	}
 	
@@ -103,5 +180,12 @@ public class ForeignKeyController {
 			e.printStackTrace();
 		}
 		return "redirect:/items";
+	}
+	@GetMapping("/time")
+	public String time(Model model) {
+		LocalDateTime now = LocalDateTime.now();
+		model.addAttribute("ldt", now);
+		model.addAttribute("dt", now.toEpochSecond(ZoneOffset.UTC));
+		return "time";
 	}
 }

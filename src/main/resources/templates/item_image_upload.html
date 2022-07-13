@@ -9,5 +9,74 @@
 		<input type="file" name="image">
 		<input type="submit" value="UP!">
 	</form>
+	<hr>
+	<h1>JavaScriptで送信する</h1>
+	<input id="js_url" type="hidden" name="url" th:value="|/item/imageUpload/${item.name}|">
+	<input id="js_input" type="file" name="image">
+	<button id="js_button">Up!</button>	
+	<script>
+	function imageUpload() {
+		let input = document.getElementById("js_input");
+		let url = document.getElementById("js_url");
+		
+		let formData = new FormData();
+		let file = new File(data, "filename", {type: "image/jpeg"});
+		formData.append("image", file);
+		let send_data = new XMLHttpRequest();
+		send_data.open("POST", url.getAttribute("value"));
+		send_data.send(formData);
+	}
+	let button = document.getElementById("js_button");
+	button.addEventListener("click", imageUpload);
+	</script>
+	<hr>
+	<h1>カメラで撮影</h1>
+	<video id="local_video"autoplay style="width: 300px; height:200px; border: 1px solid black;"></video>
+	<canvas id="canvas"></canvas>
+	<button id="take">Take!</button>
+	
+	<script>
+	window.onload = function Init(){
+		startVideo();
+		document.getElementById("take").addEventListener("click", take_picture);
+	}
+
+	function startVideo() {
+		let m = window.navigator.mediaDevices;
+		m.getUserMedia({video: true, audio: false})	
+		.then(function (stream) { 
+			document.getElementById('local_video').srcObject = stream;
+		}).catch(function (error) { // 失敗時の処理はこちら.
+			console.error('mediaDevice.getUserMedia() error:', error);
+			return;
+		});
+	}
+	
+	// javascriptでcanvas上に写真を
+	function take_picture() {
+		let video = document.getElementById('local_video');
+		var canvas = document.getElementById('canvas');	// videoのstreamをcanvasに書き出す方法.
+		var ctx = canvas.getContext('2d');
+		var w = video.offsetWidth * 0.5;	// videoの横幅取得.
+		var h = video.offsetHeight * 0.5;	// videoの縦幅取得.
+		canvas.setAttribute("width", w);	// canvasに書き出すための横幅セット.
+		canvas.setAttribute("height", h);	// canvasに書き出すための縦幅セット.
+		ctx.drawImage(video, 0, 0, w, h);	// videoの画像をcanvasに書き出し.
+
+		canvas.toBlob(sendImage, "image/jpeg", 0.8);
+	}
+	
+	function sendImage(image) {
+		let url = document.getElementById("js_url");
+		
+		let formData = new FormData();
+		let file = new File([image], "filename", {type: "image/jpeg"});
+		formData.append("image", file);
+		
+		let send_data = new XMLHttpRequest();
+		send_data.open("POST", url.getAttribute("value"));
+		send_data.send(formData);
+	}
+</script>
 </body>
 </html>
