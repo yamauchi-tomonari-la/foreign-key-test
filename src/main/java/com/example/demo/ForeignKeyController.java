@@ -71,7 +71,8 @@ public class ForeignKeyController {
 			return "redirect:/items";
 		}
 		model.addAttribute("item", o.get());
-		return "item_image_upload";
+		model.addAttribute("target", "item_image_upload");
+		return "item_upload";
 	}
 	
 	@PostMapping("/item/imageUpload/{name}")
@@ -102,7 +103,8 @@ public class ForeignKeyController {
 			return "redirect:/items";
 		}
 		model.addAttribute("item", o.get());
-		return "item_file_upload";
+		model.addAttribute("target", "item_file_upload");
+		return "item_upload";
 	}
 	
     private String getExtension(String filename) {

@@ -5,9 +5,11 @@
 <title>Update Item Image</title>
 </head>
 <body>
+<div id="contents">
 	<form th:action="|/item/fileUpload/${item.name}|" method="post" enctype="multipart/form-data">
 		<input type="file" name="image">
 		<input type="submit" value="UP!">
 	</form>
+</div>
 </body>
 </html>

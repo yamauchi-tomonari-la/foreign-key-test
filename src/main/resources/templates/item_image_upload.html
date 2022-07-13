@@ -33,6 +33,9 @@
 	<h1>カメラで撮影</h1>
 	<video id="local_video"autoplay style="width: 300px; height:200px; border: 1px solid black;"></video>
 	<canvas id="canvas"></canvas>
+	<form id="video" th:action="|/item/imageUpload/${item.name}|" method="post" enctype="multipart/form-data">
+		<input id="video_file" type="file" name="image">
+	</form>
 	<button id="take">Take!</button>
 	
 	<script>
@@ -67,15 +70,17 @@
 	}
 	
 	function sendImage(image) {
-		let url = document.getElementById("js_url");
-		
-		let formData = new FormData();
-		let file = new File([image], "filename", {type: "image/jpeg"});
-		formData.append("image", file);
-		
-		let send_data = new XMLHttpRequest();
-		send_data.open("POST", url.getAttribute("value"));
-		send_data.send(formData);
+		let form = document.getElementById("video");
+		let input = document.getElementById("video_file");
+
+		let fileList = { files: [image] };
+		fileList.prototype = FileList;
+		fileList.prototype.item = function(i) { files[i];};
+		fileList.prototype.length = function() { files.length; };
+		input.filelist = fileList;
+		// let file = new File([image], "filename", {type: "image/jpeg"});
+		// input.files[0] = file;
+		form.submit();
 	}
 </script>
 </body>
