@@ -6,15 +6,63 @@
 </head>
 <body>
 <h1>Item List</h1>
+<style>
+details {
+}
+details:hover {
+	color: red;
+}
+</style>
+<div style="display: flex;">
+<details class="hello">
+	<summary>タイトル</summary>
+	本文
+</details>
+<details class="hello">
+	<summary>タイトル</summary>
+	本文
+</details>
+<details class="hello">
+	<summary>タイトル</summary>
+	本文
+</details>
+<details class="hello">
+	<summary>タイトル</summary>
+	本文
+</details>
+<details class="hello">
+	<summary>タイトル</summary>
+	本文
+</details>
+</div>
+<script>
+function openDetails(event) {
+	event.target.parentNode.setAttribute("open", "true");
+}
+function closeDetails(event) {
+		event.target.parentNode.removeAttribute("open");
+}
+let d = document.getElementsByClassName("hello");
+for (i = 0; i < d.length; ++i) {
+	d[i].addEventListener("mouseover", openDetails);
+	d[i].addEventListener("mouseout", closeDetails);
+}
+</script>
 <table border="1">
 	<tr>
+		<th>画像</th>
 		<th>品名</th>
 		<th>カテゴリ</th>
 		<th>工場</th>
+		<th> </th>
+		<th> </th>
 	<tr th:each="item: ${items}">
+		<td><img style="height:64px;" th:src="|data:image/png;base64,${item.imageBase64}|"></td>
 		<td th:text="${item.name}"></td>
-		<td th:text="${item.category.name}"></td>
-		<td th:text="${item.factory.name}"></td>
+		<td><a th:href="|/items/category/${item.category.name}|" th:text="${item.category.name}"></a></td>
+		<td><a th:href="|/items/factory/${item.factory.name}|" th:text="${item.factory.name}"></a></td>
+		<td><a th:href="|/item/imageUpload/${item.name}|">画像追加</a></td>
+		<td><a th:href="|/item/fileUpload/${item.name}|">ファイル保存</a></td>
 	</tr>
 </table>
 <hr>

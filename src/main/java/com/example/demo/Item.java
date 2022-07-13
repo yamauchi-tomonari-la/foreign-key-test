@@ -3,8 +3,12 @@ package com.example.demo;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.hibernate.annotations.Type;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +19,7 @@ public class Item {
 	@Id
 	@Getter
 	@Setter
-	private Integer id;
+	private String name;
 	@Getter
 	@Setter
 	@ManyToOne
@@ -27,5 +31,11 @@ public class Item {
 	private Factory factory;
 	@Getter
 	@Setter
-	private String name;
+	@Lob
+	@Type(type="org.hibernate.type.BinaryType")
+	private byte[] image;
+	
+	public String getImageBase64() {
+		return Base64.encodeBase64String(image);
+	}
 }

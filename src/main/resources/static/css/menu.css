@@ -1,0 +1,160 @@
+@charset "UTF-8";
+
+
+body{
+	background-color: white;
+	color: black;
+}
+
+nav{
+    background-color: #51549e;
+    height: 55px;
+    /*優先順位*/
+    position: relative;
+    z-index: 100;
+}
+
+nav ul li{
+    float: left;
+	width: 150px;
+	height: 50px;
+}
+
+nav ul{
+	list-style-type: none;
+}
+
+nav a{
+    text-decoration: none;
+    color: white;
+    padding: 10%;
+}
+
+
+nav summary:hover{
+    background: #1a1c54;
+}
+
+nav li.search:hover {
+    background: #1a1c54;
+	
+}
+
+nav li.search{
+    float: left;
+	width: 600px;
+	height: 50px;
+}
+
+/*メニュー部分*/
+details summary{
+  /*アニメーション*/
+  transition: 0.5s;
+  /*文字色*/
+  color:white;
+  /*閉じたときの色*/
+  background-color:#51549e;
+  /*閉じたときの余白*/
+  padding:1% 2%;
+	/*上下中央寄せ*/
+	height: 50px;
+	text-align:center;
+	line-height:50px;
+}
+/*メニュー部分 開いたとき*/
+details[open] summary{
+  /*開いたときの色*/
+  background-color:#1a1c54;
+  /*開いたときの余白*/
+  padding-left:5%;
+}
+/*折りたたむ部分*/
+details p{
+  margin: 2% 4%;
+}
+details{
+  width:100%;
+  background-color: #1a1c54;
+}
+
+/*三角の矢印を削除する*/
+summary {
+    display: block;
+}
+summary::-webkit-details-marker {
+    display: none;
+}
+
+/*価格*/
+option {
+	color: white;
+}
+
+/*検索
+form.search-form {
+    padding: 5px 10px;
+    border: 1px solid #333; border-radius: 30px;
+    width: 460px; max-width: 100%;
+
+    display: flex;  justify-content: center;  align-items: center;
+
+    background: #FFF;
+    font-size: 15px;
+}
+input.search-input {
+    border: none;  background: none;  outline: none;
+    width: 420px;
+
+    color: #333;
+}*/
+form.search-form {
+	/*上下中央寄せ*/
+	height: 50px;
+	text-align:center;
+	line-height:50px;
+}
+
+input.search-button {
+    border: none;  background: none;  outline: none;
+    color: #999;  font-weight: 900;  font-family: "Font Awesome 5 Free";
+
+    transition: color 0.3s ease 0s;
+}
+input.search-button:hover {
+    color: #333;
+}
+
+/*
+nav {
+  width: 110%;
+  height: 120px;
+  background-color: white;
+  padding-top: 5px;
+  box-sizing: border-box;
+}
+
+ul {
+  display: flex;
+}
+li {
+  list-style: none;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  margin-right: 35px;
+}
+
+a.fontcolor {
+  display: block;
+  color: #51549e;
+  margin-right: 35px;
+  text-decoration: none;
+}
+
+a.fontcolor:hover {
+	color: #fff;
+	background-color: #1a1c54;
+}
+*/
