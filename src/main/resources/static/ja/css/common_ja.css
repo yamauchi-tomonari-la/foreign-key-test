@@ -1,0 +1,21 @@
+@charset "UTF-8";
+#placeholder {  /* 名前はdiv要素のidとあわせてください */
+  top: 0px;     /* 場所は適当に調整してください */
+  left: 0px;
+  width: 30em;    /* サイズは適当に調整してください */
+  height: 12px;
+  transform: scale(1, 1);    /* これは肝なので、そのまま使ってください */
+}
+
+#enlarge {    /* 名前はa要素のidとあわせてください */
+  position: fixed;    /* これは肝なので、そのまま使ってください */
+  width: fit-content; /* 文字列の長さに合わせてサイズを自動調整します */
+  align-items: center;   /* div要素の中央に中央あわせします */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#enlarge:hover {
+  transform: matrix(2, 0, 0, 2, -0.5, -0.5);    /* 文字の拡大率を設定してください */
+}
