@@ -9,7 +9,9 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,39 @@ public class ForeignKeyController {
 	@Autowired
 	FactoryRepository factoryRepository;
 	
+	@GetMapping("/")
+	public String index() {
+		return "index";
+	}
+	
+	@GetMapping("/{lang}")
+	public String index(
+			@PathVariable("lang") String lang,
+			Model model) {
+		Map<String, String> titleMap = new HashMap<>();
+		titleMap.put("ja", "インデクスページ");
+		titleMap.put("en", "INDEX PAGE");
+		
+		model.addAttribute("title", titleMap.containsKey(lang)? titleMap.get(lang): "index page");
+		model.addAttribute("page_title", titleMap.containsKey(lang)? titleMap.get(lang): "index page");
+		model.addAttribute("body", "index_" + lang);
+		return "template_" + lang;
+	}
+	@GetMapping("/{lang}/{action}")
+	public String index(
+			@PathVariable("lang") String lang,
+			@PathVariable("action") String action,
+			Model model) {
+		Map<String, String> titleMap = new HashMap<>();
+		titleMap.put("ja", "インデクスページ");
+		titleMap.put("en", "INDEX PAGE");
+		
+		model.addAttribute("title", titleMap.containsKey(lang)? titleMap.get(lang): "index page");
+		model.addAttribute("page_title", titleMap.containsKey(lang)? titleMap.get(lang): "index page");
+		model.addAttribute("body", action + "_" + lang);
+		return "template_" + lang;
+	}
+
 	@GetMapping("/login")
 	public String login() {
 		return "panda";
@@ -41,6 +76,11 @@ public class ForeignKeyController {
 		model.addAttribute("items", items);
 		model.addAttribute("num", 3.141592);
 		return "item_list";
+	}
+	
+	@GetMapping("/items/download")
+	public Object itemsDownload() {
+		return null;
 	}
 	
 	@GetMapping("/items/factory/{name}")

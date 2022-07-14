@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Item List</title>
+<style>
+	.factory::before {
+		content: '《';
+	}
+	.factory::after {
+		content: '》';
+	}
+</style>
+
 </head>
 <body>
 <div id="contents">
@@ -14,28 +23,7 @@ details:hover {
 	color: red;
 }
 </style>
-<div style="display: flex;">
-<details class="hello">
-	<summary>タイトル</summary>
-	本文
-</details>
-<details class="hello">
-	<summary>タイトル</summary>
-	本文
-</details>
-<details class="hello">
-	<summary>タイトル</summary>
-	本文
-</details>
-<details class="hello">
-	<summary>タイトル</summary>
-	本文
-</details>
-<details class="hello">
-	<summary>タイトル</summary>
-	本文
-</details>
-</div>
+
 <script>
 function openDetails(event) {
 	event.target.parentNode.setAttribute("open", "true");
@@ -61,11 +49,12 @@ for (i = 0; i < d.length; ++i) {
 		<td><img style="height:64px;" th:src="|data:image/png;base64,${item.imageBase64}|"></td>
 		<td th:text="${item.name}"></td>
 		<td><a th:href="|/items/category/${item.category.name}|" th:text="${item.category.name}"></a></td>
-		<td><a th:href="|/items/factory/${item.factory.name}|" th:text="${item.factory.name}"></a></td>
+		<td><a class="factory" th:href="|/items/factory/${item.factory.name}|" th:text="${item.factory.name}"></a></td>
 		<td><a th:href="|/item/imageUpload/${item.name}|">画像追加</a></td>
 		<td><a th:href="|/item/fileUpload/${item.name}|">ファイル保存</a></td>
 	</tr>
 </table>
+<a href="/items/download">ダウンロード</a>
 <hr>
 <h1>数値のテスト</h1>
 <p th:text="${#numbers.formatDecimal(num,3,2)}"></p>
